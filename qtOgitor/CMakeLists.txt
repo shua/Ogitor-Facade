@@ -2,15 +2,6 @@ project(QtOgitor)
 set(QT_MIN_VERSION "4.5.0")
 find_package(Qt4 COMPONENTS QtSvg REQUIRED)
 
-if(UNIX AND NOT APPLE)
-    if(EXISTS /usr/share/kde4/apps/cmake/modules/KDE4Macros.cmake)
-        include(/usr/share/kde4/apps/cmake/modules/KDE4Macros.cmake)
-    else()
-        include(/usr/share/apps/cmake/modules/KDE4Macros.cmake)
-    endif()
-endif(UNIX AND NOT APPLE)
-
-
 if(NOT QT4_FOUND)
     message(SEND_ERROR "Failed to find Qt 4.5 or greater.")
 else(NOT QT4_FOUND)
@@ -261,9 +252,6 @@ if(UNIX AND NOT APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/qtOgitor/share
         DESTINATION ${PREFIX}
     )
-
-    add_subdirectory(icons)
-    kde4_update_iconcache()
 
     INSTALL(CODE "EXECUTE_PROCESS(COMMAND sh ${CMAKE_SOURCE_DIR}/gen-qt-projectfile ${CMAKE_SOURCE_DIR} OUTPUT_FILE ${CMAKE_SOURCE_DIR}/qtOgitor/languages/translate.pro)")
     INSTALL(CODE "EXECUTE_PROCESS(COMMAND lrelease ${CMAKE_SOURCE_DIR}/qtOgitor/languages/translate.pro)")

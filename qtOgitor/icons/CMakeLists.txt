@@ -1,1 +1,0 @@
-kde4_install_icons(${CMAKE_INSTALL_PREFIX}/share/icons)
