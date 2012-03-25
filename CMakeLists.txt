@@ -50,7 +50,7 @@ if (NOT OGRE_BUILD_PLATFORM_IPHONE)
 		# Statically linking boost to a dynamic Ogre build doesn't work on Linux 64bit
 		set(Boost_USE_STATIC_LIBS ${OGRE_STATIC})
 	endif ()
-	set(Boost_ADDITIONAL_VERSIONS "1.38.0" "1.38" "1.39.0" "1.39" "1.40.0" "1.40" "1.44.0" "1.44" "1.45" "1.46")
+	set(Boost_ADDITIONAL_VERSIONS "1.38.0" "1.38" "1.39.0" "1.39" "1.40.0" "1.40" "1.44.0" "1.44" "1.45" "1.46" "1.47" "1.48" "1.49" "1.49.0")
 	# Components that need linking (NB does not include header-only components like bind)
 	set(OGRE_BOOST_COMPONENTS thread date_time regex)
 	find_package(Boost COMPONENTS ${OGRE_BOOST_COMPONENTS} QUIET)
@@ -89,6 +89,15 @@ set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules/;${CMAKE_MODULE_
 #endif(UNIX)
 
 find_package(OGRE REQUIRED)
+
+if(UNIX)                                                                                            
+    # Newer ld versions need this linked explicitly
+    find_package(Threads REQUIRED)
+    add_definitions(${CMAKE_THREAD_LIBS_INIT})
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS}-Wl,--no-as-needed ${CMAKE_THREAD_LIBS_INIT}")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS}-Wl,--no-as-needed ${CMAKE_THREAD_LIBS_INIT}")
+    set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS}-Wl,--no-as-needed ${CMAKE_THREAD_LIBS_INIT}")
+endif(UNIX)
 
 if(APPLE)
 	find_package(CG REQUIRED)

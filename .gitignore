@@ -1,0 +1,6 @@
+RunPath/Media
+RunPath/Projects
+build
+CMakeLists.txt.user
+qtOgitor/languages/*.qm
+qtOgitor/languages/*.pro
